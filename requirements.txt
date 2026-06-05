@@ -1,1 +1,6 @@
 streamlit
+streamlit-lottie
+requests
+pandas
+plotly
+openpyxl
