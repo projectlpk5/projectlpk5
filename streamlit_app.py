@@ -85,7 +85,7 @@ if lottie_water:
 
 st.markdown("""
 <div class="hero">
-<h1>💧 WATER FLOW SYSTEM</h1>
+<h1>💧 WATER FLOW SYSTEM - KELOMPOK 11</h1>
 <p>Simulasi, Perhitungan, Visualisasi & Analisis Debit Air Profesional</p>
 </div>
 """, unsafe_allow_html=True)
@@ -106,13 +106,9 @@ with st.sidebar:
 
 # ================= DASHBOARD =================
 if menu == "🏠 Dashboard":
-    st.subheader("📊 Overview Sistem")
-    
-    lottie_fun = load_lottie("https://assets2.lottiefiles.com/packages/lf20_touohxv0.json")
-    if lottie_fun:
-        st_lottie(lottie_fun, height=150)
 
-    pilihan = st.selectbox("Pilih Mode", ["Debit", "Flow", "Analisis"])
+
+    pilihan = st.selectbox("Pilih Mode", ["Debit"])
     st.success("💡 Tips: Coba berbagai metode biar lihat perbedaan debitnya!")
 
     if pilihan == "Debit":
@@ -121,11 +117,12 @@ if menu == "🏠 Dashboard":
         c2.metric("Status", "Active")
         c3.metric("Mode", "Watery")
 
-        st.write("Ini halaman Debit")
+        st.write("### 📌 Ringkasan Sistem")
 
-        st.markdown("### 🌊 Visual Konsep Aliran Air (Asas Kontinuitas)")
-        url_gambar = "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a8/Venturi_flow.svg/1200px-Venturi_flow.svg.png"
-        st.image(url_gambar, caption="Ilustrasi Perubahan Luas Penampang (A) dan Kecepatan Aliran (v)", width=500)
+        # ===== VISUAL KONSEP =====
+        st.markdown("POLITEKNIK AKA BOGOR - SISTEM SIMULASI DEBIT AIR")
+        url_gambar = "gevika.jpeg"
+        st.image(url_gambar, caption="Sistem Simulasi Debit Air - Mahasiswa/i Kelompok 11", width=500)
 
         st.markdown("""
         ### ⚡ Cara Kerja Sistem
@@ -147,6 +144,19 @@ if menu == "🏠 Dashboard":
         - Melihat visualisasi perubahan debit dalam bentuk grafik dinamis
         """)
 
+        st.markdown("### ⚙️ Fitur Utama")
+        st.markdown("""
+        💧 **Perhitungan Debit Otomatis** Mendukung metode Volume & Waktu, Pipa & Kecepatan, dan Sungai  
+
+        📊 **Analisis Data** Menampilkan nilai maksimum, minimum, dan rata-rata secara otomatis  
+
+        📈 **Visualisasi Interaktif** Grafik garis (*Line Chart*) perubahan debit terhadap waktu menggunakan Plotly  
+
+        💾 **Penyimpanan Data lokal** Data tersimpan aman di database SQLite internal  
+
+        ⬇️ **Export Data** Hasil rekapan data bisa diunduh langsung dalam bentuk file Excel (`.xlsx`)  
+        """)
+
 # ================= HITUNG =================
 elif menu == "💧 Hitung Debit":
     st.subheader("💧 Kalkulator Debit Air")
@@ -159,15 +169,15 @@ elif menu == "💧 Hitung Debit":
 
     with st.form("form"):
         if metode == "Volume & Waktu":
-            v_vol = st.number_input("Volume (m³)", min_value=0.0, max_value=10000.0, value=1.0)
-            t_waktu = st.number_input("Waktu (s)", min_value=0.1, max_value=10000.0, value=1.0)
+            v_vol = st.number_input("Volume (m³)", min_value=0.0, max_value=1000000.0, value=1.0)
+            t_waktu = st.number_input("Waktu (s)", min_value=0.1, max_value=1000000.0, value=1.0)
         elif metode == "Pipa & Kecepatan":
-            d_pipa = st.number_input("Diameter Pipa (m)", min_value=0.0, max_value=10.0, value=0.001, step=0.001, format="%.3f")
-            v_kecepatan = st.number_input("Kecepatan Aliran Pipa (m/s)", min_value=0.0, max_value=100.0, value=1.0, step=0.1, format="%.2f")
+            d_pipa = st.number_input("Diameter Pipa (m)", min_value=0.0, max_value=1000000.0, value=0.001, step=0.001, format="%.3f")
+            v_kecepatan = st.number_input("Kecepatan Aliran Pipa (m/s)", min_value=0.0, max_value=100.0, value=1.0, step=0.00001, format="%.1f")
         else:
-            l_sungai = st.number_input("Lebar Sungai (m)", min_value=0.0, max_value=100.0, value=1.0)
-            k_sungai = st.number_input("Kedalaman Sungai (m)", min_value=0.0, max_value=100.0, value=1.0)
-            v_sungai = st.number_input("Kecepatan Aliran Sungai (m/s)", min_value=0.0, max_value=100.0, value=1.0)
+            l_sungai = st.number_input("Lebar Sungai (m)", min_value=0.0, max_value=100000.0, value=1.0)
+            k_sungai = st.number_input("Kedalaman Sungai (m)", min_value=0.0, max_value=10000.0, value=1.0)
+            v_sungai = st.number_input("Kecepatan Aliran Sungai (m/s)", min_value=0.0, max_value=100000.0, value=1.0)
 
         hitung = st.form_submit_button("🔥 HITUNG DEBIT")
 
@@ -178,16 +188,15 @@ elif menu == "💧 Hitung Debit":
         elif metode == "Pipa & Kecepatan":
             a = math.pi * (d_pipa / 2) ** 2
             debit = a * v_kecepatan
-            rumus = "Q = A × v  (Di mana A = Luas Penampang Pipa = π × r² dalam satuan m²)"
+            rumus = "Q = A × v  (Di mana A = π × r²)"
         else:
             a = l_sungai * k_sungai
             debit = a * v_sungai
-            rumus = "Q = A × v  (Di mana A = Luas Penampang Sungai = Lebar × Kedalaman dalam satuan m²)"
+            rumus = "Q = A × v  (Di mana A = Lebar × Kedalaman)"
 
         waktu = datetime.now().strftime("%H:%M:%S")
         save(waktu, metode, debit)
 
-        # Output presisi 7 desimal agar pipa ukuran kecil/milimeter tidak terdeteksi 0.0000
         st.success(f"💧 Debit Air ({metode}) = {debit:.7f} m³/s")
         st.info(f"📌 Rumus yang digunakan: {rumus}")
 
@@ -202,7 +211,7 @@ elif menu == "💧 Hitung Debit":
         ### 🧠 Analisis Otomatis
         - Level aliran saat ini: **{level}**
         - Status: Nilai ini menunjukkan parameter laju aliran fluida pada kondisi input Anda.
-        - *Insight*: Semakin besar penampang ($\text{m}^2$) atau kecepatan aliran ($\text{m/s}$), nilai debit ($Q$ dalam $\text{m}^3/\text{s}$) akan meningkat.
+        - *Insight*: Semakin besar penampang atau kecepatan aliran, nilai debit ($Q$) akan meningkat secara linear.
         """)
 
 # ================= ANALISIS =================
@@ -212,11 +221,11 @@ elif menu == "📊 Analisis":
         st.dataframe(df)
         st.markdown("### 📊 Statistik Log")
         c1, c2, c3 = st.columns(3)
-        c1.metric("Debit Maksimum", f"{df['debit'].max():.7f} m³/s")
-        c2.metric("Debit Minimum", f"{df['debit'].min():.7f} m³/s")
-        c3.metric("Rata-rata Debit", f"{df['debit'].mean():.7f} m³/s")
+        c1.metric("Debit Maksimum", f"{df['debit'].max():.4f} m³/s")
+        c2.metric("Debit Minimum", f"{df['debit'].min():.4f} m³/s")
+        c3.metric("Rata-rata Debit", f"{df['debit'].mean():.4f} m³/s")
     else:
-        st.warning("Belum ada data untuk dianalisis.")
+        st.warning("Belum ada data di database untuk dianalisis. Silakan lakukan perhitungan terlebih dahulu!")
 
 # ================= VISUALISASI =================
 elif menu == "📈 Visualisasi":
@@ -231,8 +240,10 @@ elif menu == "📈 Visualisasi":
             title="Grafik Fluktuasi Debit Air terhadap Waktu"
         )
         st.plotly_chart(fig, use_container_width=True)
+        st.markdown("### 📌 Interpretasi Grafik")
+        st.info("Grafik di atas merekam tren naik-turunnya debit air berdasarkan log waktu penyimpanan. Titik lonjakan menandakan adanya perubahan signifikan pada luas area penampang atau kecepatan fluida yang dimasukkan.")
     else:
-        st.warning("Tidak ada data untuk divisualisasikan.")
+        st.warning("Tidak ada data untuk divisualisasikan. Yuk, hitung debit dulu!")
 
 # ================= DATA =================
 elif menu == "📋 Data":
@@ -242,14 +253,19 @@ elif menu == "📋 Data":
         buffer = BytesIO()
         with pd.ExcelWriter(buffer, engine="openpyxl") as writer:
             df.to_excel(writer, index=False)
-        st.download_button("⬇️ Export Data ke Excel", buffer.getvalue(), "waterflow_final.xlsx")
+        st.download_button(
+            "⬇️ Export Data ke Excel",
+            buffer.getvalue(),
+            "waterflow_final.xlsx"
+        )
 
 # ================= RESET =================
 elif menu == "🔄 Reset":
     st.subheader("🔄 Reset Database Sistem")
+    st.warning("Peringatan! Tindakan ini akan menghapus semua riwayat data secara permanen dari database.")
     if st.button("🗑 HAPUS SEMUA DATA PERMANEN"):
         reset()
-        st.success("Database berhasil dikosongkan!")
+        st.success("Database berhasil dikosongkan! Silakan segarkan halaman.")
 
 st.markdown("---")
 st.markdown("<center style='color:white'>💧 WATER FLOW SYSTEM 2026</center>", unsafe_allow_html=True)
