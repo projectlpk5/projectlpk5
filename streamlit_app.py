@@ -201,16 +201,16 @@ elif menu == "💧 Hitung Debit":
     st.subheader("💧 Kalkulator Debit Air")
 
     metode = st.selectbox("Metode", [
-        "Volume & Waktu",
-        "Pipa & Kecepatan",
-        "Sungai"
+        "Perhitungan Debit Air",
+        "Perhitungan Debit Air Pipa",
+        "Perhitungan Debit Air Sungai"
     ])
 
     with st.form("form"):
-        if metode == "Volume & Waktu":
+        if metode == "Perhitungan Debit Air":
             v_vol = st.number_input("Volume (m³)", min_value=0.0, max_value=1000000.0, value=1.0)
             t_waktu = st.number_input("Waktu (s)", min_value=0.1, max_value=1000000.0, value=1.0)
-        elif metode == "Pipa & Kecepatan":
+        elif metode == "Perhitungan Debit Air Pipa":
             d_pipa = st.number_input("Diameter Pipa (m)", min_value=0.0, max_value=1000000.0, value=0.001, step=0.001, format="%.3f")
             v_kecepatan = st.number_input("Kecepatan Aliran Pipa (m/s)", min_value=0.0, max_value=100.0, value=1.0, step=0.00001, format="%.1f")
         else:
@@ -221,10 +221,10 @@ elif menu == "💧 Hitung Debit":
         hitung = st.form_submit_button("🔥 HITUNG DEBIT")
 
     if hitung:
-        if metode == "Volume & Waktu":
+        if metode == "Perhitungan Debit Air":
             debit = v_vol / t_waktu
             rumus = "Q = V / t"
-        elif metode == "Pipa & Kecepatan":
+        elif metode == "Perhitungan Debit Air Sungai":
             a = math.pi * (d_pipa / 2) ** 2
             debit = a * v_kecepatan
             rumus = "Q = A × v  (Di mana A = π × r²)"
