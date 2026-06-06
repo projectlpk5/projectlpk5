@@ -83,7 +83,7 @@ h1, h2, h3, h4, h5, h6, p, label, span, li, ol, ul {
     font-weight: 500;
 }
 
-/* 6. MENGUBAH KOTAK INFO & SUCCESS MENJADI PUTIH DENGAN TEKS HITAM */
+/* 6. Kotak Info & Success Menjadi Putih dengan Teks Hitam */
 .stAlert {
     background-color: #ffffff !important;
     border: 1px solid #dddddd !important;
@@ -94,14 +94,25 @@ h1, h2, h3, h4, h5, h6, p, label, span, li, ol, ul {
     color: #000000 !important;
 }
 
-/* 7. Custom Button */
-.stButton button{
-    width:100%;
-    height:50px;
-    border-radius:12px;
-    background:linear-gradient(135deg,#00B4D8,#48CAE4);
-    color:white;
-    font-weight:bold;
+/* 7. Perbaikan Semua Tombol (Hitung, Download Excel, Hapus Data) */
+.stButton button, div[data-testid="stForm"] button, .stDownloadButton button {
+    width: 100% !important;
+    height: 50px !important;
+    border-radius: 12px !important;
+    background: linear-gradient(135deg, #00B4D8, #0077B6) !important;
+    color: #ffffff !important;
+    font-weight: bold !important;
+    font-size: 16px !important;
+    border: none !important;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2) !important;
+    transition: all 0.3s ease !important;
+}
+
+/* Efek pas tombol disentuh mouse */
+.stButton button:hover, div[data-testid="stForm"] button:hover, .stDownloadButton button:hover {
+    background: linear-gradient(135deg, #0077B6, #023E8A) !important;
+    color: #ffffff !important;
+    transform: translateY(-2px) !important;
 }
 </style>
 """, unsafe_allow_html=True)
