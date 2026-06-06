@@ -48,9 +48,12 @@ def load_lottie(url):
 # ================= STYLE =================
 st.markdown("""
 <style>
+/* 1. Background Utama */
 .stApp{
     background: linear-gradient(135deg,#001233,#001845,#023E8A,#0077B6,#00B4D8);
 }
+
+/* 2. Hero Component */
 .hero{
     padding:35px;
     border-radius:20px;
@@ -59,6 +62,8 @@ st.markdown("""
     background:linear-gradient(135deg,rgba(0,180,216,.95),rgba(2,62,138,.95));
     box-shadow:0 15px 40px rgba(0,0,0,.35);
 }
+
+/* 3. Custom Card */
 .card{
     background:rgba(255,255,255,.08);
     padding:15px;
@@ -66,7 +71,24 @@ st.markdown("""
     color:white;
     backdrop-filter: blur(10px);
 }
-h1,h2,h3,p,label{color:white !important;}
+
+/* 4. Memaksa Semua Teks Standar & List di Halaman Utama Berwarna Putih */
+h1, h2, h3, h4, h5, h6, p, label, span, li, ol, ul {
+    color: white !important;
+}
+
+/* 5. Memperbaiki Teks Menu Sidebar agar Berwarna Gelap & Kontras */
+[data-testid="stSidebar"] *, [data-testid="stSidebar"] span, [data-testid="stSidebar"] label {
+    color: #001233 !important;
+    font-weight: 500;
+}
+
+/* 6. Memperbaiki Teks di Dalam Kotak st.info / st.success */
+.stAlert p, .stAlert span, .stAlert li {
+    color: #004085 !important;
+}
+
+/* 7. Custom Button */
 .stButton button{
     width:100%;
     height:50px;
@@ -106,7 +128,6 @@ with st.sidebar:
 
 # ================= DASHBOARD =================
 if menu == "🏠 Dashboard":
-
 
     pilihan = st.selectbox("Pilih Mode", ["Debit"])
     st.success("💡 Tips: Coba berbagai metode biar lihat perbedaan debitnya!")
@@ -162,16 +183,16 @@ elif menu == "💧 Hitung Debit":
     st.subheader("💧 Kalkulator Debit Air")
 
     metode = st.selectbox("Metode", [
-        "Perhitungan Debit Air",
-        "Perhitungan Debit Air Pipa",
-        "Perhitungan Debit Air Sungai"
+        "Volume & Waktu",
+        "Pipa & Kecepatan",
+        "Sungai"
     ])
 
     with st.form("form"):
-        if metode == "Perhitungan Debit Air":
+        if metode == "Volume & Waktu":
             v_vol = st.number_input("Volume (m³)", min_value=0.0, max_value=1000000.0, value=1.0)
             t_waktu = st.number_input("Waktu (s)", min_value=0.1, max_value=1000000.0, value=1.0)
-        elif metode == "Perhitungan Debir Air Pipa":
+        elif metode == "Pipa & Kecepatan":
             d_pipa = st.number_input("Diameter Pipa (m)", min_value=0.0, max_value=1000000.0, value=0.001, step=0.001, format="%.3f")
             v_kecepatan = st.number_input("Kecepatan Aliran Pipa (m/s)", min_value=0.0, max_value=100.0, value=1.0, step=0.00001, format="%.1f")
         else:
@@ -182,10 +203,10 @@ elif menu == "💧 Hitung Debit":
         hitung = st.form_submit_button("🔥 HITUNG DEBIT")
 
     if hitung:
-        if metode == "Perhitungan Debit Air":
+        if metode == "Volume & Waktu":
             debit = v_vol / t_waktu
             rumus = "Q = V / t"
-        elif metode == "Perhitungan Debit Air Pipa":
+        elif metode == "Pipa & Kecepatan":
             a = math.pi * (d_pipa / 2) ** 2
             debit = a * v_kecepatan
             rumus = "Q = A × v  (Di mana A = π × r²)"
