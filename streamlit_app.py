@@ -77,15 +77,21 @@ h1, h2, h3, h4, h5, h6, p, label, span, li, ol, ul {
     color: white !important;
 }
 
-/* 5. Memperbaiki Teks Menu Sidebar agar Berwarna Gelap & Kontras */
+/* 5. Memperbaiki Teks Menu Sidebar agar Berwarna Gelap & Kontras dengan Sidebar Putih */
 [data-testid="stSidebar"] *, [data-testid="stSidebar"] span, [data-testid="stSidebar"] label {
     color: #001233 !important;
     font-weight: 500;
 }
 
-/* 6. Memperbaiki Teks di Dalam Kotak st.info / st.success */
-.stAlert p, .stAlert span, .stAlert li {
-    color: #004085 !important;
+/* 6. MENGUBAH KOTAK INFO & SUCCESS MENJADI PUTIH DENGAN TEKS HITAM */
+.stAlert {
+    background-color: #ffffff !important;
+    border: 1px solid #dddddd !important;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+.stAlert p, .stAlert span, .stAlert li, .stAlert div {
+    color: #000000 !important;
 }
 
 /* 7. Custom Button */
