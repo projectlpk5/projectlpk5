@@ -224,7 +224,7 @@ elif menu == "💧 Hitung Debit":
         if metode == "Perhitungan Debit Air":
             debit = v_vol / t_waktu
             rumus = "Q = V / t"
-        elif metode == "Perhitungan Debit Air Sungai":
+        elif metode == "Perhitungan Debit Air Pipa":
             a = math.pi * (d_pipa / 2) ** 2
             debit = a * v_kecepatan
             rumus = "Q = A × v  (Di mana A = π × r²)"
