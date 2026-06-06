@@ -48,13 +48,13 @@ def load_lottie(url):
 # ================= STYLE =================
 st.markdown("""
 <style>
-/* 1. Background Utama */
-.stApp{
+/* 1. Background Utama Aplikasi */
+.stApp {
     background: linear-gradient(135deg,#001233,#001845,#023E8A,#0077B6,#00B4D8);
 }
 
 /* 2. Hero Component */
-.hero{
+.hero {
     padding:35px;
     border-radius:20px;
     text-align:center;
@@ -63,27 +63,30 @@ st.markdown("""
     box-shadow:0 15px 40px rgba(0,0,0,.35);
 }
 
-/* 3. Custom Card */
-.card{
-    background:rgba(255,255,255,.08);
-    padding:15px;
-    border-radius:15px;
-    color:white;
-    backdrop-filter: blur(10px);
-}
-
-/* 4. Memaksa Semua Teks Standar & List di Halaman Utama Berwarna Putih */
-h1, h2, h3, h4, h5, h6, p, label, span, li, ol, ul {
+/* 3. Menargetkan Judul & Teks Utama di Halaman Main (Bukan dalam Input) */
+[data-testid="stMainBlockContainer"] h1, 
+[data-testid="stMainBlockContainer"] h2, 
+[data-testid="stMainBlockContainer"] h3, 
+[data-testid="stMainBlockContainer"] h4, 
+[data-testid="stMainBlockContainer"] p, 
+[data-testid="stMainBlockContainer"] li, 
+[data-testid="stMainBlockContainer"] label {
     color: white !important;
 }
 
-/* 5. Memperbaiki Teks Menu Sidebar agar Berwarna Gelap & Kontras dengan Sidebar Putih */
-[data-testid="stSidebar"] *, [data-testid="stSidebar"] span, [data-testid="stSidebar"] label {
-    color: #001233 !important;
-    font-weight: 500;
+/* 4. MEMPERBAIKI KOTAK INPUT (Selectbox, Number Input, dll) AGAR TETAP HITAM */
+div[data-baseweb="select"] *, div[data-testid="stNumberInput"] input {
+    color: #000000 !important;
 }
 
-/* 6. Kotak Info & Success Menjadi Putih dengan Teks Hitam */
+/* 5. MEMPERBAIKI TEKS MENU DI SIDEBAR (GARANSI KONTRAS) */
+[data-testid="stSidebar"] [data-testid="stWidgetLabel"] p,
+[data-testid="stSidebar"] span {
+    color: #001233 !important;
+    font-weight: bold !important;
+}
+
+/* 6. Kotak Info & Success Bawaan Menjadi Putih Bersih, Teks Hitam Pekat */
 .stAlert {
     background-color: #ffffff !important;
     border: 1px solid #dddddd !important;
@@ -94,7 +97,7 @@ h1, h2, h3, h4, h5, h6, p, label, span, li, ol, ul {
     color: #000000 !important;
 }
 
-/* 7. Perbaikan Semua Tombol (Hitung, Download Excel, Hapus Data) */
+/* 7. Perbaikan Semua Tombol (Hitung & Download Excel) */
 .stButton button, div[data-testid="stForm"] button, .stDownloadButton button {
     width: 100% !important;
     height: 50px !important;
@@ -105,14 +108,12 @@ h1, h2, h3, h4, h5, h6, p, label, span, li, ol, ul {
     font-size: 16px !important;
     border: none !important;
     box-shadow: 0 4px 15px rgba(0,0,0,0.2) !important;
-    transition: all 0.3s ease !important;
 }
 
-/* Efek pas tombol disentuh mouse */
+/* Efek saat tombol diarahkan mouse */
 .stButton button:hover, div[data-testid="stForm"] button:hover, .stDownloadButton button:hover {
     background: linear-gradient(135deg, #0077B6, #023E8A) !important;
     color: #ffffff !important;
-    transform: translateY(-2px) !important;
 }
 </style>
 """, unsafe_allow_html=True)
