@@ -250,6 +250,7 @@ elif menu == "💧 Hitung Debit":
 
     metode = st.selectbox("Metode", [
         "Perhitungan Debit Air Pipa",
+        "Perhitungan Debit Air Pipa",
         "Perhitungan Debit Air Sungai"
     ])
 
