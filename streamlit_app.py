@@ -315,7 +315,6 @@ if not df_tampil.empty:
 st.dataframe(df_tampil)
         st.markdown("### 📊 Statistik Log")
         c1, c2, c3 = st.columns(3)
-       ganti jadi ini
 
 c1.metric(
     "Debit Maksimum",
@@ -359,6 +358,11 @@ elif menu == "📋 Data":
     if not df.empty:
         buffer = BytesIO()
         df_export = df.copy()
+
+if not df_export.empty:
+    df_export["debit"] = df_export["debit"].apply(format_id)
+
+df_export = df.copy()
 
 if not df_export.empty:
     df_export["debit"] = df_export["debit"].apply(format_id)
