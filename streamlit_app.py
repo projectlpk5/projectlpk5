@@ -33,10 +33,6 @@ def reset():
     c.execute("DELETE FROM flow_data")
     conn.commit()
 
-def reset():
-    c.execute("DELETE FROM flow_data")
-    conn.commit()
-
 # ================= FORMAT ANGKA INDONESIA =================
 
 def format_id(angka):
@@ -248,11 +244,11 @@ dalam perencanaan jaringan perpipaan dan distribusi air bersih.
 elif menu == "💧 Hitung Debit":
     st.subheader("💧 Kalkulator Debit Air")
 
-    metode = st.selectbox("Metode", [
-        "Perhitungan Debit Air Pipa",
-        "Perhitungan Debit Air Pipa",
-        "Perhitungan Debit Air Sungai"
-    ])
+   metode = st.selectbox("Metode", [
+    "Perhitungan Debit Air",
+    "Perhitungan Debit Air Pipa",
+    "Perhitungan Debit Air Sungai"
+])
 
     with st.form("form"):
         if metode == "Perhitungan Debit Air":
@@ -306,33 +302,37 @@ elif menu == "💧 Hitung Debit":
 # ================= ANALISIS =================
 elif menu == "📊 Analisis":
     st.subheader("📊 Analisis Data Statistik")
+
     if not df.empty:
+
         df_tampil = df.copy()
+        df_tampil["debit"] = df_tampil["debit"].apply(format_id)
 
-if not df_tampil.empty:
-    df_tampil["debit"] = df_tampil["debit"].apply(format_id)
+        st.dataframe(df_tampil)
 
-st.dataframe(df_tampil)
         st.markdown("### 📊 Statistik Log")
+
         c1, c2, c3 = st.columns(3)
 
-c1.metric(
-    "Debit Maksimum",
-    f"{format_id(df['debit'].max())} m³/s"
-)
+        c1.metric(
+            "Debit Maksimum",
+            f"{format_id(df['debit'].max())} m³/s"
+        )
 
-c2.metric(
-    "Debit Minimum",
-    f"{format_id(df['debit'].min())} m³/s"
-)
+        c2.metric(
+            "Debit Minimum",
+            f"{format_id(df['debit'].min())} m³/s"
+        )
 
-c3.metric(
-    "Rata-rata Debit",
-    f"{format_id(df['debit'].mean())} m³/s"
-)
+        c3.metric(
+            "Rata-rata Debit",
+            f"{format_id(df['debit'].mean())} m³/s"
+        )
+
     else:
-        st.warning("Belum ada data di database untuk dianalisis. Silakan lakukan perhitungan terlebih dahulu!")
-
+        st.warning(
+            "Belum ada data di database untuk dianalisis. Silakan lakukan perhitungan terlebih dahulu!"
+        )
 # ================= VISUALISASI =================
 elif menu == "📈 Visualisasi":
     st.subheader("📈 Visualisasi Grafik Perubahan")
