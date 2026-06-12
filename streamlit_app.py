@@ -126,6 +126,17 @@ if lottie_water:
 st.markdown("""
 <div class="hero">
 <h1>💧 WATER FLOW SYSTEM - KELOMPOK 11</h1>
+
+<p><b>Anggota Kelompok :</b></p>
+
+<p>
+Alip Ramadani Kurniawan (2530597)<br>
+Aqil Zaim Ukhrowi (2530598)<br>
+Firros Raya Ramadhan (2530615)<br>
+Gevika Hikma Maulidia (2530617)<br>
+Muhammad Faisal Kurniawan (2530632)
+</p>
+
 <p>Simulasi, Perhitungan, Visualisasi & Analisis Debit Air Profesional</p>
 </div>
 """, unsafe_allow_html=True)
@@ -195,13 +206,38 @@ if menu == "🏠 Dashboard":
 
         ⬇️ **Export Data** Hasil rekapan data bisa diunduh langsung dalam bentuk file Excel (`.xlsx`)  
         """)
+        st.markdown("## 📚 LANDASAN TEORI")
+
+st.info("""
+### Debit Air Sungai
+
+Debit sungai adalah volume air yang mengalir melalui suatu penampang sungai dalam periode waktu tertentu.
+Pengukuran debit sungai diperlukan untuk mengetahui potensi sumber daya air,
+pengendalian banjir, kebutuhan irigasi, serta pemantauan kualitas lingkungan perairan.
+
+Menurut SNI 8066:2015, pengukuran debit sungai dilakukan dengan menentukan luas
+penampang basah dan kecepatan aliran sehingga diperoleh besarnya debit aliran sungai.
+""")
+
+st.info("""
+### Debit Air Perpipaan
+
+Debit air pada perpipaan merupakan jumlah volume air yang mengalir melalui pipa
+dalam satuan waktu tertentu.
+
+Pengukuran debit pada sistem perpipaan bertujuan untuk mengetahui kapasitas aliran
+dan kinerja sistem distribusi air.
+
+Dalam perencanaan dan pengukuran sistem perpipaan, acuan yang digunakan adalah
+SNI 7509:2011, yang menjelaskan bahwa debit merupakan salah satu parameter utama
+dalam perencanaan jaringan perpipaan dan distribusi air bersih.
+""")
 
 # ================= HITUNG =================
 elif menu == "💧 Hitung Debit":
     st.subheader("💧 Kalkulator Debit Air")
 
     metode = st.selectbox("Metode", [
-        "Perhitungan Debit Air",
         "Perhitungan Debit Air Pipa",
         "Perhitungan Debit Air Sungai"
     ])
