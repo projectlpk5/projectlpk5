@@ -33,8 +33,19 @@ def reset():
     c.execute("DELETE FROM flow_data")
     conn.commit()
 
+def reset():
+    c.execute("DELETE FROM flow_data")
+    conn.commit()
+
+# ================= FORMAT ANGKA INDONESIA =================
+
+def format_id(angka):
+    return f"{angka:.4f}".replace(".", ",")
+
 # ================= CONFIG =================
+
 st.set_page_config("Water Flow", "💧", layout="wide")
+
 
 def load_lottie(url):
     try:
@@ -196,7 +207,7 @@ if menu == "🏠 Dashboard":
 
         st.markdown("### ⚙️ Fitur Utama")
         st.markdown("""
-        💧 **Perhitungan Debit Otomatis** Mendukung metode Volume & Waktu, Pipa & Kecepatan, dan Sungai  
+        💧 **Perhitungan Debit Air Berdasarkan Metode Pengukuran** Mendukung metode Volume & Waktu, Pipa & Kecepatan, dan Sungai  
 
         📊 **Analisis Data** Menampilkan nilai maksimum, minimum, dan rata-rata secara otomatis  
 
@@ -272,7 +283,9 @@ elif menu == "💧 Hitung Debit":
         waktu = datetime.now().strftime("%H:%M:%S")
         save(waktu, metode, debit)
 
-        st.success(f"💧 Debit Air ({metode}) = {debit:.7f} m³/s")
+        st.success(
+    f"💧 Debit Air ({metode}) = {format_id(debit)} m³/s"
+)
         st.info(f"📌 Rumus yang digunakan: {rumus}")
 
         if debit < 1:
@@ -293,12 +306,30 @@ elif menu == "💧 Hitung Debit":
 elif menu == "📊 Analisis":
     st.subheader("📊 Analisis Data Statistik")
     if not df.empty:
-        st.dataframe(df)
+        df_tampil = df.copy()
+
+if not df_tampil.empty:
+    df_tampil["debit"] = df_tampil["debit"].apply(format_id)
+
+st.dataframe(df_tampil)
         st.markdown("### 📊 Statistik Log")
         c1, c2, c3 = st.columns(3)
-        c1.metric("Debit Maksimum", f"{df['debit'].max():.4f} m³/s")
-        c2.metric("Debit Minimum", f"{df['debit'].min():.4f} m³/s")
-        c3.metric("Rata-rata Debit", f"{df['debit'].mean():.4f} m³/s")
+       ganti jadi ini
+
+c1.metric(
+    "Debit Maksimum",
+    f"{format_id(df['debit'].max())} m³/s"
+)
+
+c2.metric(
+    "Debit Minimum",
+    f"{format_id(df['debit'].min())} m³/s"
+)
+
+c3.metric(
+    "Rata-rata Debit",
+    f"{format_id(df['debit'].mean())} m³/s"
+)
     else:
         st.warning("Belum ada data di database untuk dianalisis. Silakan lakukan perhitungan terlebih dahulu!")
 
@@ -326,8 +357,14 @@ elif menu == "📋 Data":
     st.dataframe(df)
     if not df.empty:
         buffer = BytesIO()
-        with pd.ExcelWriter(buffer, engine="openpyxl") as writer:
-            df.to_excel(writer, index=False)
+        df_export = df.copy()
+
+if not df_export.empty:
+    df_export["debit"] = df_export["debit"].apply(format_id)
+
+with pd.ExcelWriter(buffer, engine="openpyxl") as writer:
+    df_export.to_excel(writer, index=False)
+    
         st.download_button(
             "⬇️ Export Data ke Excel",
             buffer.getvalue(),
